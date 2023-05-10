@@ -5,7 +5,7 @@ describe('Test', () => {
   })
 
   describe('prueba', () => {
-    test('Probando el mentodo index', () => {
+    test('Probando el mentodo', () => {
       const expeted = 'Hi ResVu';
       const result = 'Hi ResVu';
   
