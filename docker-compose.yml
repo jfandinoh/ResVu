@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  api:
+    container_name: api_container
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    environment:
+      HOST: postgres
+      USER_DB: root
+      PASSWORD_DB: root
+      PORT_DB: 5432
+    volumes:
+      - ./:/app
+      - /app/node_modules
+
+  postgres:
+    container_name: postgres_container
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: root
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+  
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "80:80"
+    depends_on:
+      - postgres
