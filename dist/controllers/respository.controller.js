@@ -14,7 +14,7 @@ const database_1 = require("../database");
 const getRepository = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (Number(process.env.TEST) != 1) {
-            const response = yield database_1.pool.query('SELECT * FROM respositories');
+            const response = yield database_1.pool.query('SELECT * FROM repositories');
             console.log(response.rows);
             return res.status(200).json(response.rows);
         }
@@ -33,7 +33,7 @@ const getRepositoryById = (req, res) => __awaiter(void 0, void 0, void 0, functi
         if (Number(process.env.TEST) != 1) {
             console.log(req.params.id);
             const id = parseInt(req.params.id);
-            const response = yield database_1.pool.query('SELECT * FROM respositories WHERE id = $1', [id]);
+            const response = yield database_1.pool.query('SELECT * FROM repositories WHERE id = $1', [id]);
             console.log(response.rows);
             return res.status(200).json(response.rows);
         }
@@ -52,13 +52,11 @@ const createRepository = (req, res) => __awaiter(void 0, void 0, void 0, functio
         if (Number(process.env.TEST) != 1) {
             console.log(req.body);
             const { name, link } = req.body;
-            const response = yield database_1.pool.query('INSERT INTO respositories (name,link) VALUES ($1,$2)', [name, link]);
+            const response = yield database_1.pool.query('INSERT INTO repositories (name,link) VALUES ($1,$2) RETURNING id,name,link', [name, link]);
             console.log(response);
             return res.status(200).json({
                 message: 'Repository create',
-                body: {
-                    user: { name, link }
-                }
+                body: response.rows
             });
         }
         else {
@@ -81,7 +79,7 @@ const updateRepository = (req, res) => __awaiter(void 0, void 0, void 0, functio
             const id = parseInt(req.params.id);
             console.log(req.body);
             const { name, link } = req.body;
-            const response = yield database_1.pool.query('UPDATE respositories SET name = $1 , link = $2 WHERE id = $3', [name, link, id]);
+            const response = yield database_1.pool.query('UPDATE repositories SET name = $1 , link = $2 WHERE id = $3 RETURNING id,name,link', [name, link, id]);
             console.log(response.rows);
             return res.status(200).json('Repository updated');
         }
@@ -100,7 +98,7 @@ const deleteRepositoryById = (req, res) => __awaiter(void 0, void 0, void 0, fun
         if (Number(process.env.TEST) != 1) {
             console.log(req.params.id);
             const id = parseInt(req.params.id);
-            const response = yield database_1.pool.query('DELETE FROM respositories WHERE id = $1', [id]);
+            const response = yield database_1.pool.query('DELETE FROM repositories WHERE id = $1', [id]);
             console.log(response);
             return res.status(200).json('Repositoy deleted');
         }

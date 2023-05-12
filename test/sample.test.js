@@ -1,11 +1,11 @@
 describe('Test', () => {
-    it('should test that true === true', () => {
+    it('true === true', () => {
       expect(true).toBe(true)
     })
   })
 
-  describe('prueba', () => {
-    test('Probando el mentodo', () => {
+  describe('test', () => {
+    test('testing', () => {
       const expeted = 'Hi ResVu';
       const result = 'Hi ResVu';
   
