@@ -2,6 +2,8 @@
 Backend Engineer Coding Challenge
 
 Simple code scanning app that detects keywords in public git repositories.
+(https://raw.githubusercontent.com/jfandinoh/ITO-Software/main/Objetos DB.sql)
+
 
 #steps to run the application
   1. Run app and db: docker-compose up --build
